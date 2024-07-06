@@ -9,21 +9,51 @@ const Control = () => {
     const [intensidadFoco, setIntensidadFoco] = useState(50);
     const [ventiladorEncendido, setVentiladorEncendido] = useState(false);
     const [sensorTemperatura, setSensorTemperatura] = useState(false);
-    const [showDialog, setShowDialog] = useState(false);
-    const [circleColor, setCircleColor] = useState('#ccc'); // Estado inicial para el color del círculo
+    const [showFocoDialog, setShowFocoDialog] = useState(false);
+    const [showSensorDialog, setShowSensorDialog] = useState(false);
+    const [circleColor, setCircleColor] = useState('#ccc');
+    const [temperatura, setTemperatura] = useState(0);
+    const [humedad, setHumedad] = useState(0);
 
     const handleFocoClick = () => {
         setFocoEncendido(!focoEncendido);
         if (!focoEncendido) {
-            setShowDialog(true);
+            setShowFocoDialog(true);
             setTimeout(() => {
                 setFocoEncendido(false);
             }, 1000);
         }
     };
 
-    const handleCloseDialog = () => {
-        setShowDialog(false);
+    const handleVentiladorClick = () => {
+        setVentiladorEncendido(!ventiladorEncendido);
+        if (ventiladorEncendido) {
+            setCircleColor('#ccc');
+        } else {
+            setCircleColor('green');
+        }
+    };
+
+    const handleCloseFocoDialog = () => {
+        setShowFocoDialog(false);
+    };
+
+    const handleSensorTemperaturaClick = () => {
+        setSensorTemperatura(!sensorTemperatura);
+        if (!sensorTemperatura) {
+            const temperaturaSimulada = 25;
+            const humedadSimulada = 60;
+            setTemperatura(temperaturaSimulada);
+            setHumedad(humedadSimulada);
+            setShowSensorDialog(true);
+        } else {
+            setShowSensorDialog(false);
+        }
+    };
+
+    const handleCloseSensorDialog = () => {
+        setShowSensorDialog(false);
+        setSensorTemperatura(false); 
     };
 
     const handleChangeIntensidadFoco = (event, newValue) => {
@@ -57,7 +87,7 @@ const Control = () => {
                         <Button
                             variant="contained"
                             color={ventiladorEncendido ? "secondary" : "primary"}
-                            onClick={() => setVentiladorEncendido(!ventiladorEncendido)}
+                            onClick={handleVentiladorClick}
                         >
                             {ventiladorEncendido ? 'Apagar Ventilador' : 'Prender Ventilador'}
                         </Button>
@@ -70,16 +100,14 @@ const Control = () => {
                         <Button
                             variant="contained"
                             color={sensorTemperatura ? "secondary" : "primary"}
-                            onClick={() => setSensorTemperatura(!sensorTemperatura)}
+                            onClick={handleSensorTemperaturaClick}
                         >
                             {sensorTemperatura ? 'Detener sensor de temperatura' : 'Prender sensor de temperatura'}
                         </Button>
                     </motion.div>
                 </div>
             </Container>
-
-            {/* Diálogo para ajustar la intensidad del foco */}
-            <Dialog open={showDialog} onClose={handleCloseDialog}>
+            <Dialog open={showFocoDialog} onClose={handleCloseFocoDialog}>
                 <DialogTitle>Ajustar Intensidad del Foco</DialogTitle>
                 <DialogContent>
                     <Slider
@@ -92,7 +120,19 @@ const Control = () => {
                     />
                 </DialogContent>
                 <DialogActions>
-                    <Button onClick={handleCloseDialog} color="primary">
+                    <Button onClick={handleCloseFocoDialog} color="primary">
+                        Cerrar
+                    </Button>
+                </DialogActions>
+            </Dialog>
+            <Dialog open={showSensorDialog} onClose={handleCloseSensorDialog}>
+                <DialogTitle>Información del Sensor</DialogTitle>
+                <DialogContent dividers>
+                    <Typography variant="subtitle1">Temperatura: {temperatura} °C</Typography>
+                    <Typography variant="subtitle1">Humedad: {humedad} %</Typography>
+                </DialogContent>
+                <DialogActions>
+                    <Button onClick={handleCloseSensorDialog} color="primary">
                         Cerrar
                     </Button>
                 </DialogActions>
