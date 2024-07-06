@@ -1,23 +1,30 @@
-import logo from './logo.svg';
-import './App.css';
+import React, { useState } from 'react';
+import './assets/styles/App.css';
 
-function App() {
+const App = () => {
+  const [focoEncendido, setFocoEncendido] = useState(false);
+  const [ventiladorEncendido, setVentiladorEncendido] = useState(false);
+  const [otraActividadEncendida, setOtraActividadEncendida] = useState(false);
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <h1>Control de Actividades</h1>
+      <div className="container">
+        <button onClick={() => setFocoEncendido(!focoEncendido)}>
+          {focoEncendido ? 'Apagar Foco' : 'Prender Foco'}
+        </button>
+        <button onClick={() => setVentiladorEncendido(!ventiladorEncendido)}>
+          {ventiladorEncendido ? 'Apagar Ventilador' : 'Prender Ventilador'}
+        </button>
+        <button onClick={() => setOtraActividadEncendida(!otraActividadEncendida)}>
+          {otraActividadEncendida ? 'Apagar sensor de temperatura' : 'Prender sensor de temperatura'}
+        </button>
+      </div>
+      <div className="animaciones">
+        <div className={`foco ${focoEncendido ? 'encendido' : ''}`}></div>
+        <div className={`ventilador ${ventiladorEncendido ? 'encendido' : ''}`}></div>
+        <div className={`otra-actividad ${otraActividadEncendida ? 'encendido' : ''}`}></div>
+      </div>
     </div>
   );
 }
