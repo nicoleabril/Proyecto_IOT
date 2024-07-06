@@ -1,26 +1,22 @@
-body {
-  font-family: 'Roboto', sans-serif;
-  background-color: #f0f0f0;
-  margin: 0;
-  padding: 0;
-}
-
 .App {
   text-align: center;
+  background-color: #5f3737;
+  height: 100vh;
+  width: 100vw;
   padding: 20px;
 }
 
-.buttons-container {
+.App .buttons-container {
   margin: 20px 0;
 }
 
-.actividades {
+.App .actividades {
   display: flex;
   justify-content: center;
   margin-top: 50px;
 }
 
-.foco, .ventilador, .sensorTempuratura {
+.App .foco,.App .ventilador,.App .sensorTempuratura {
   width: 50px;
   height: 50px;
   margin: 0 20px;
