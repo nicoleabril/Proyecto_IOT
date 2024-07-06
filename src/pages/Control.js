@@ -9,7 +9,7 @@ const Control = () => {
     const [sensorTempuratura, setsensorTempuratura] = useState(false);
 
     return (
-        <div className="App">
+        <div className="Control">
             <Container className="App" maxWidth="md">
                 <Typography variant="h2" gutterBottom>
                     Control de Animaciones
