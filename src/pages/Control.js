@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Button, Container, Typography } from '@mui/material';
 import { motion } from 'framer-motion';
-import './assets/styles/Control.css';
+import '../assets/styles/Control.css';
 
 const Control = () => {
   const [focoEncendido, setFocoEncendido] = useState(false);
