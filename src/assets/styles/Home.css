@@ -1,0 +1,72 @@
+.home-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background: linear-gradient(to right, #6a11cb, #2575fc);
+    color: white;
+    text-align: center;
+  }
+  
+  .title {
+    font-size: 3em;
+    font-family: 'Arial', sans-serif;
+    margin-bottom: 0.5em;
+    animation: fadeInDown 1s ease-out;
+  }
+  
+  .subtitle {
+    font-size: 2em;
+    font-family: 'Arial', sans-serif;
+    margin-bottom: 1em;
+    animation: fadeInUp 1s ease-out;
+  }
+  
+  .try-button {
+    padding: 0.5em 2em;
+    font-size: 1.5em;
+    color: white;
+    background-color: #ff4081;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    animation: fadeIn 2s ease-out;
+    transition: background-color 0.3s ease;
+  }
+  
+  .try-button:hover {
+    background-color: #ff1c6c;
+  }
+  
+  @keyframes fadeInDown {
+    from {
+      opacity: 0;
+      transform: translateY(-20px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+  
+  @keyframes fadeInUp {
+    from {
+      opacity: 0;
+      transform: translateY(20px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+  
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+    }
+    to {
+      opacity: 1;
+    }
+  }
+  

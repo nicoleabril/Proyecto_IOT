@@ -1,15 +1,14 @@
-import React, { useEffect } from 'react';
+import React from 'react';
+import '../assets/styles/Home.css';
 
 const Home = () => {
-
   return (
-    <div>
-      <div>
-        <p>Proyecto de IoT</p>
-        <a href="/ControlActividades"><button>Probar</button></a>
-      </div>
+    <div className="home-container">
+      <h1 className="title">Proyecto IoT</h1>
+      <p className="subtitle">Sistemas Distribuidos</p>
+      <a href="/ControlActividades"><button className="try-button">Probar</button></a>
     </div>
   );
-};
+}
 
 export default Home;
