@@ -6,6 +6,7 @@ const Home = () => {
     <div>
       <div>
         <p>Proyecto de IoT</p>
+        <a href="/ControlActividades"><button>Probar</button></a>
       </div>
     </div>
   );
