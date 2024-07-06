@@ -20,7 +20,7 @@ const App = () => {
           {otraActividadEncendida ? 'Apagar sensor de temperatura' : 'Prender sensor de temperatura'}
         </button>
       </div>
-      <div className="animaciones">
+      <div className="actividades">
         <div className={`foco ${focoEncendido ? 'encendido' : ''}`}></div>
         <div className={`ventilador ${ventiladorEncendido ? 'encendido' : ''}`}></div>
         <div className={`otra-actividad ${otraActividadEncendida ? 'encendido' : ''}`}></div>
