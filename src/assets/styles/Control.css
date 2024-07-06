@@ -1,13 +1,14 @@
 .Control {
   text-align: center;
-  background-color: #5f3737;
+  background: linear-gradient(to right, #02e4c6, #8dc000);
   height: 100vh;
   width: 100vw;
-  padding: 20px;
+  padding: 170px;
 }
 
 .Control .buttons-container {
-  margin: 20px 0;
+  padding: 50px;
+  margin: 20px;
 }
 
 .Control .actividades {
@@ -23,3 +24,17 @@
   border-radius: 50%;
 }
 
+.Control button{
+  justify-content: center;
+  align-items: center;
+  margin: 10px;
+  background-color: #104cce;
+}
+
+.Control button:hover{
+  background-color: #1026ce;
+}
+
+.Control button:active{
+  transform: scale(1.1);
+}
