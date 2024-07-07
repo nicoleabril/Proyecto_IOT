@@ -5,6 +5,7 @@ import Confetti from 'react-confetti';
 import '../assets/styles/Control.css';
 
 const Control = () => {
+
     const [focoEncendido, setFocoEncendido] = useState(false);
     const [intensidadFoco, setIntensidadFoco] = useState(50);
     const [ventiladorEncendido, setVentiladorEncendido] = useState(false);
@@ -62,6 +63,7 @@ const Control = () => {
 
     return (
         <div className="Control">
+            <button className="back-button" onClick={() => window.history.back()}>←</button>
             <Confetti />
             <Container className="App" maxWidth="md">
                 <Typography variant="h2" gutterBottom>
@@ -104,6 +106,11 @@ const Control = () => {
                         >
                             {sensorTemperatura ? 'Detener sensor de temperatura' : 'Prender sensor de temperatura'}
                         </Button>
+                    </motion.div>
+                    <motion.div
+                        whileHover={{ scale: 1.1 }}
+                        whileTap={{ scale: 0.9 }}
+                    >
                     </motion.div>
                 </div>
             </Container>
