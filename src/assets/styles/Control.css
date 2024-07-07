@@ -57,18 +57,18 @@
   width: 100vw;
   padding: 170px;
   color : white;
-  position: relative; /* Asegura que el posicionamiento relativo esté establecido */
+  position: relative;
 }
 
 .Control .back-button {
   position: absolute;
-  top: 20px; /* Distancia desde el borde superior */
-  left: 20px; /* Distancia desde el borde izquierdo */
-  opacity: 0.7; /* Opacidad del botón */
-  color: white; /* Color del texto blanco */
+  top: 20px;
+  left: 20px;
+  opacity: 0.7;
+  color: white; 
   background-color: linear-gradient(to right,  #70c973, #4886f0);
-  border: none; /* Sin borde */
-  padding: 10px 20px; /* Espaciado interno */
-  font-size: 16px; /* Tamaño de fuente */
-  cursor: pointer; /* Cambia el cursor a un puntero al pasar el mouse */
+  border: none;
+  padding: 10px 20px;
+  font-size: 16px;
+  cursor: pointer;
 }
