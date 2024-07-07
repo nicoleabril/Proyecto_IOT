@@ -1,30 +1,16 @@
-import React, { useState } from 'react';
-import './assets/styles/App.css';
-
-const App = () => {
-  const [focoEncendido, setFocoEncendido] = useState(false);
-  const [ventiladorEncendido, setVentiladorEncendido] = useState(false);
-  const [otraActividadEncendida, setOtraActividadEncendida] = useState(false);
-
+import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
+import Control from './pages/Control.js';
+import Home from "./pages/Home.js";
+import './assets/styles/app.css';
+function App () {
   return (
     <div className="App">
-      <h1>Control de Actividades</h1>
-      <div className="container">
-        <button onClick={() => setFocoEncendido(!focoEncendido)}>
-          {focoEncendido ? 'Apagar Foco' : 'Prender Foco'}
-        </button>
-        <button onClick={() => setVentiladorEncendido(!ventiladorEncendido)}>
-          {ventiladorEncendido ? 'Apagar Ventilador' : 'Prender Ventilador'}
-        </button>
-        <button onClick={() => setOtraActividadEncendida(!otraActividadEncendida)}>
-          {otraActividadEncendida ? 'Apagar sensor de temperatura' : 'Prender sensor de temperatura'}
-        </button>
-      </div>
-      <div className="actividades">
-        <div className={`foco ${focoEncendido ? 'encendido' : ''}`}></div>
-        <div className={`ventilador ${ventiladorEncendido ? 'encendido' : ''}`}></div>
-        <div className={`otra-actividad ${otraActividadEncendida ? 'encendido' : ''}`}></div>
-      </div>
+      <Router>
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/ControlActividades" element={<Control />} />
+        </Routes>
+      </Router>
     </div>
   );
 }
