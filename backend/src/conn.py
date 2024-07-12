@@ -1,7 +1,7 @@
 import paho.mqtt.client as mqtt
 import asyncio
 
-from backend.src.singleton import SingletonMeta
+from src.singleton import SingletonMeta
 from src.data_handler import DataHandler
 
 

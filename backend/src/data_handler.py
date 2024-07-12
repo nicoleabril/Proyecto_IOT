@@ -1,4 +1,4 @@
-from backend.src.singleton import SingletonMeta
+from src.singleton import SingletonMeta
 from fastapi import WebSocket
 
 
