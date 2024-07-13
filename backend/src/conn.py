@@ -5,27 +5,34 @@ from src.singleton import SingletonMeta
 from src.data_handler import DataHandler
 
 
-class ConnMQTT:
+class ConnMQTT(metaclass=SingletonMeta):
     def __init__(self):
         # self.shared_data = shared_data
 
         self.client = mqtt.Client()
-        self.client.on_message = self.on_message
+        self.client.on_message = self.on_message_wrapper
         self.client.reconnect_delay_set(min_delay=1, max_delay=120)
 
-        self.client.connect("192.168.100.125", 1883, 60)
+        self.client.connect("192.168.100.133", 1883, 60)
 
         self.topics = {}
 
+        self.loop = asyncio.get_event_loop()
         self.client.loop_start()
 
-    def on_message(self, client, userdata, message: mqtt.MQTTMessage):
+    def on_message_wrapper(self, client, userdata, message):
+        # Ejecuta el coroutine en el loop de eventos principal
+        asyncio.run_coroutine_threadsafe(
+            self.on_message(client, userdata, message), self.loop
+        )
+
+    async def on_message(self, client, userdata, message: mqtt.MQTTMessage):
         if self.topics.get(message.topic) is None:
             return
 
         data = message.payload.decode("utf-8")
         print(data)
-        self.topics[message.topic](data)
+        await self.topics[message.topic](data)
 
     def subscribe(self, topic: str, callable):
         if topic not in self.topics:
