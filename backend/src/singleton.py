@@ -1,18 +1,57 @@
-import threading
-from multiprocessing import Manager, freeze_support
+from threading import Lock, Thread
+
 
 class SingletonMeta(type):
-    _instances = None
-    _lock = threading.Lock()
+    """
+    This is a thread-safe implementation of Singleton.
+    """
 
-    def _init_(cls, name, bases, dct):
-        super().__init__(name, bases, dct)
-        if SingletonMeta._instances is None:
-            SingletonMeta._instances = Manager().dict()
+    _instances = {}
 
-    def _call_(cls, *args, **kwargs):
+    _lock: Lock = Lock()
+    """
+    We now have a lock object that will be used to synchronize threads during
+    first access to the Singleton.
+    """
+
+    def __call__(cls, *args, **kwargs):
+        """
+        Possible changes to the value of the `__init__` argument do not affect
+        the returned instance.
+        """
+        # Now, imagine that the program has just been launched. Since there's no
+        # Singleton instance yet, multiple threads can simultaneously pass the
+        # previous conditional and reach this point almost at the same time. The
+        # first of them will acquire lock and will proceed further, while the
+        # rest will wait here.
         with cls._lock:
-            if cls.__name__ not in cls._instances:
+            # The first thread to acquire the lock, reaches this conditional,
+            # goes inside and creates the Singleton instance. Once it leaves the
+            # lock block, a thread that might have been waiting for the lock
+            # release may then enter this section. But since the Singleton field
+            # is already initialized, the thread won't create a new object.
+            if cls not in cls._instances:
                 instance = super().__call__(*args, **kwargs)
-                SingletonMeta._instances[cls.__name__] = instance
-        return SingletonMeta._instances[cls.__name__]
+                cls._instances[cls] = instance
+        return cls._instances[cls]
+
+
+# import threading
+# from multiprocessing import Manager, freeze_support
+
+
+# class SingletonMeta(type):
+#     _instances = None
+#     _lock = threading.Lock()
+
+#     def __init__(cls, name, bases, dct):
+#         super().__init__(name, bases, dct)
+#         if SingletonMeta._instances is None:
+#             SingletonMeta._instances = Manager().dict()
+
+#     def __call__(cls, *args, **kwargs):
+#         with cls._lock:
+#             if cls.__name__ not in cls._instances:
+#                 instance = super().__call__(*args, **kwargs)
+#                 SingletonMeta._instances[cls.__name__] = instance
+#         return SingletonMeta._instances[cls.__name__]
