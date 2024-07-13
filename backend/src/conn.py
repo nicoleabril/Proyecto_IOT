@@ -13,7 +13,7 @@ class ConnMQTT(metaclass=SingletonMeta):
         self.client.on_message = self.on_message_wrapper
         self.client.reconnect_delay_set(min_delay=1, max_delay=120)
 
-        self.client.connect("192.168.100.133", 1883, 60)
+        self.client.connect("192.168.1.2", 1883, 60)
 
         self.topics = {}
 

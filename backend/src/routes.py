@@ -13,7 +13,7 @@ async def index():
 
 
 @router.websocket("/ws/temperature")
-async def websocket_endpoint(websocket: WebSocket):
+async def websocket_temperature(websocket: WebSocket):
     await websocket.accept()  # Acepta la conexión
 
     data_handler = DataHandler()
@@ -33,7 +33,7 @@ async def websocket_endpoint(websocket: WebSocket):
 
 
 @router.websocket("/ws/humidity")
-async def websocket_endpoint(websocket: WebSocket):
+async def websocket_humidity(websocket: WebSocket):
 
     await websocket.accept()  # Acepta la conexión
 
@@ -50,4 +50,27 @@ async def websocket_endpoint(websocket: WebSocket):
             print(f"Mensaje recibido: {data}")
     except WebSocketDisconnect:
         data_handler.hum_subscribers.remove(websocket)
+        print("WebSocket desconectado")
+
+
+@router.websocket("/ws/LED")
+async def websocket_led(websocket: WebSocket):
+
+    await websocket.accept()  # Acepta la conexión
+
+    data_handler = DataHandler()
+
+    mqtt = ConnMQTT()
+    mqtt.subscribe("LED", data_handler.send_led)
+
+    data_handler.led_subscribers.append(websocket)
+
+    try:
+        while True:
+            data = await websocket.receive_text()
+            data = data.replace('"', "")
+            mqtt.client.publish("LED", data)
+            print(f"Mensaje recibido: {data}")
+    except WebSocketDisconnect:
+        data_handler.led_subscribers.remove(websocket)
         print("WebSocket desconectado")
