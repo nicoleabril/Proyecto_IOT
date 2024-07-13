@@ -17,7 +17,8 @@
     "react-scripts": "5.0.1",
     "socket.io-client": "^4.7.5",
     "web-vitals": "^2.1.4",
-    "websocket": "^1.0.35"
+    "websocket": "^1.0.35",
+    "ws": "^8.18.0"
   },
   "scripts": {
     "start": "react-scripts start",
