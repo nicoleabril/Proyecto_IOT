@@ -59,7 +59,7 @@ const Control = () => {
                 client.close();
             };
         
-    }, [humedad]);
+    }, []);
 
     useEffect(() => {
             const wsUrl = 'ws://192.168.1.7:8000/ws/temperature';
@@ -78,7 +78,7 @@ const Control = () => {
             return () => {
                 client.close();
             };
-    }, [temperatura]);
+    }, []);
 
 
     const sendDataToWebSocket = (data) => {
