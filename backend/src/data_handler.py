@@ -8,6 +8,8 @@ class DataHandler(metaclass=SingletonMeta):
         self.temp_subscribers = []
         self.hum_subscribers = []
         self.led_subscribers = []
+        self.fan_subscribers = []
+        self.fan_state = '0'
 
     async def send_temp(self, temp):
         for sub in self.temp_subscribers:
@@ -32,5 +34,18 @@ class DataHandler(metaclass=SingletonMeta):
                 await sub.send_json(
                     jsonable_encoder({"data": led})
                 )  # Enviar datos de humedad
+            except Exception as e:
+                print(f"Error al enviar datos al WebSocket: {e}")
+
+    async def send_fan(self, fan):
+        for sub in self.fan_subscribers:
+            try:
+                if fan == "1":
+                    self.fan_state = '1'
+                else:
+                    self.fan_state = '0'
+                await sub.send_json(
+                    jsonable_encoder({"data": fan})
+                )  # Enviar datos del ventilador
             except Exception as e:
                 print(f"Error al enviar datos al WebSocket: {e}")

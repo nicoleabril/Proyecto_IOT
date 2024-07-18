@@ -74,3 +74,30 @@ async def websocket_led(websocket: WebSocket):
     except WebSocketDisconnect:
         data_handler.led_subscribers.remove(websocket)
         print("WebSocket desconectado")
+
+
+@router.websocket("/ws/FAN")
+async def websocket_fan(websocket: WebSocket):
+    
+        await websocket.accept()  # Acepta la conexión
+
+        data_handler = DataHandler()
+
+        mqtt = ConnMQTT()
+
+        mqtt.subscribe("FAN", data_handler.send_fan)
+
+        data_handler.fan_subscribers.append(websocket)
+
+        #Enviamos al cliente el estado actual del ventilador
+        await websocket.send_json({"data": data_handler.fan_state})
+
+        try:
+            while True:
+                data = await websocket.receive_text()
+                data = data.replace('"', "")
+                mqtt.client.publish("FAN", data)
+                print(f"Mensaje recibido: {data}")
+        except WebSocketDisconnect:
+            data_handler.fan_subscribers.remove(websocket)
+            print("WebSocket desconectado")
