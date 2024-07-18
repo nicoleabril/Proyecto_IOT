@@ -42,8 +42,6 @@ const Control = () => {
     }, []);
     
     useEffect(() => {
-        if(client !== null) return
-        const webSocketHumedad = () => {
             const wsUrl = 'ws://192.168.1.7:8000/ws/humidity';
             const client = (new W3CWebSocket(wsUrl)); // Use native WebSocket
 
@@ -60,10 +58,10 @@ const Control = () => {
             return () => {
                 client.close();
             };
+        
+    }, [humedad]);
 
-        }
-
-        const webSocketTemperatura = () => {
+    useEffect(() => {
             const wsUrl = 'ws://192.168.1.7:8000/ws/temperature';
             const client = (new W3CWebSocket(wsUrl)); // Use native WebSocket
 
@@ -80,41 +78,8 @@ const Control = () => {
             return () => {
                 client.close();
             };
+    }, [temperatura]);
 
-        }
-        webSocketHumedad();
-        webSocketTemperatura();
-        
-    }, [temperatura, humedad]);
-
-
-
-
-    /*const createConnection = () => {
-        const wsUrl = 'ws://192.168.100.133:8000/ws/LED';
-        setClient(new W3CWebSocket(wsUrl));
-
-        client.onopen = () => {
-            console.log('Conexión WebSocket abierta');
-             // Send data as JSON string
-        };
-        
-        client.onmessage = (message) => {
-            const data = JSON.parse(message.data);
-            setTemperatura(data.data);
-            // Aquí puedes actualizar el estado de React con los datos recibidos
-        };
-        client.onclose = () => {
-            console.log('Conexión WebSocket cerrada');
-        };
-        client.onerror = (error) => {
-            console.error('WebSocket Error:', error);
-        };
-    }
-
-    const closeConnection = () => {
-        client.close();
-    }*/
 
     const sendDataToWebSocket = (data) => {
         clientLED.send(JSON.stringify(data));
