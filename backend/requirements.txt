@@ -1,0 +1,4 @@
+uvicorn
+multiprocessing-logging
+fastapi
+paho-mqtt
