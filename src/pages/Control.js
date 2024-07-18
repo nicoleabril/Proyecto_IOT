@@ -32,6 +32,14 @@ const Control = () => {
 
         clientVENTI.onmessage = (message) => {
             const data = JSON.parse(message.data);
+            if(Number(data.data)===0){
+                setVentiladorEncendido(false);
+                setCircleColor('#ccc');
+            } 
+            if(Number(data.data)===1){
+                setVentiladorEncendido(true);
+                setCircleColor('green');
+            } 
             setVentilador(Number(data.data));
         };
 
@@ -124,7 +132,7 @@ const Control = () => {
     };
 
     const handleVentiladorClick = () => {
-        const ventiladorConstante = false;
+        const ventiladorConstante = ventiladorEncendido;
         if(ventilador===0) ventiladorConstante === (false);
         if(ventilador===1) ventiladorConstante ===(true);
         setVentiladorEncendido(ventiladorConstante);
