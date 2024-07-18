@@ -16,10 +16,32 @@ const Control = () => {
     const [circleColor, setCircleColor] = useState('#ccc');
     const [temperatura, setTemperatura] = useState(0);
     const [humedad, setHumedad] = useState(0);
+    const [ventilador, setVentilador] = useState(0);
     const [clientLED, setClientLED] = useState([]);
-    const [client, setClient] = useState([]);
+    const [clientVENTI, setClientVENTI] = useState([]);
 
+    //VENTILADOR
+    useEffect(() => {
+        const wsUrl = 'ws://192.168.1.7:8000/ws/FAN';
+        const clientVENTI = (new W3CWebSocket(wsUrl)); // Use native WebSocket
+        setClientVENTI(clientVENTI);
 
+        clientVENTI.onopen = () => {
+            console.log('Conexión WebSocket abierta');
+        };
+
+        clientVENTI.onmessage = (message) => {
+            const data = JSON.parse(message.data);
+            setVentilador(Number(data.data));
+        };
+
+        return () => {
+            clientVENTI.close();
+        };
+
+    }, []);
+    
+    //LED
     useEffect(() => {
         const wsUrl = 'ws://192.168.1.7:8000/ws/LED';
         const clientLED = (new W3CWebSocket(wsUrl)); // Use native WebSocket
@@ -41,6 +63,7 @@ const Control = () => {
 
     }, []);
     
+    //SENSOR HUMEDAD
     useEffect(() => {
             const wsUrl = 'ws://192.168.1.7:8000/ws/humidity';
             const client = (new W3CWebSocket(wsUrl)); // Use native WebSocket
@@ -61,6 +84,7 @@ const Control = () => {
         
     }, []);
 
+    //SENSOR TEMPERATURA
     useEffect(() => {
             const wsUrl = 'ws://192.168.1.7:8000/ws/temperature';
             const client = (new W3CWebSocket(wsUrl)); // Use native WebSocket
@@ -85,6 +109,10 @@ const Control = () => {
         clientLED.send(JSON.stringify(data));
     };
 
+    const sendDataToWebSocketVenti = (data) => {
+        clientVENTI.send(JSON.stringify(data));
+    };
+
     const handleFocoClick = () => {
         setFocoEncendido(!focoEncendido);
         if (!focoEncendido) {
@@ -96,10 +124,15 @@ const Control = () => {
     };
 
     const handleVentiladorClick = () => {
-        setVentiladorEncendido(!ventiladorEncendido);
-        if (ventiladorEncendido) {
+        const ventiladorConstante = false;
+        if(ventilador===0) ventiladorConstante === (false);
+        if(ventilador===1) ventiladorConstante ===(true);
+        setVentiladorEncendido(ventiladorConstante);
+        if (ventiladorConstante) {
+            sendDataToWebSocketVenti(0);
             setCircleColor('#ccc');
         } else {
+            sendDataToWebSocketVenti(1);
             setCircleColor('green');
         }
     };
