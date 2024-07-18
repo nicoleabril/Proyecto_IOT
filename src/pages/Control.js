@@ -22,7 +22,7 @@ const Control = () => {
 
     //VENTILADOR
     useEffect(() => {
-        const wsUrl = 'ws://192.168.1.7:8000/ws/FAN';
+        const wsUrl = 'ws://192.168.1.2:8000/ws/FAN';
         const clientVENTI = (new W3CWebSocket(wsUrl)); // Use native WebSocket
         setClientVENTI(clientVENTI);
 
@@ -51,7 +51,7 @@ const Control = () => {
     
     //LED
     useEffect(() => {
-        const wsUrl = 'ws://192.168.1.7:8000/ws/LED';
+        const wsUrl = 'ws://192.168.1.2:8000/ws/LED';
         const clientLED = (new W3CWebSocket(wsUrl)); // Use native WebSocket
         setClientLED(clientLED);
 
@@ -73,7 +73,7 @@ const Control = () => {
     
     //SENSOR HUMEDAD
     useEffect(() => {
-            const wsUrl = 'ws://192.168.1.7:8000/ws/humidity';
+            const wsUrl = 'ws://192.168.1.2:8000/ws/humidity';
             const client = (new W3CWebSocket(wsUrl)); // Use native WebSocket
 
             client.onopen = () => {
@@ -94,7 +94,7 @@ const Control = () => {
 
     //SENSOR TEMPERATURA
     useEffect(() => {
-            const wsUrl = 'ws://192.168.1.7:8000/ws/temperature';
+            const wsUrl = 'ws://192.168.1.2:8000/ws/temperature';
             const client = (new W3CWebSocket(wsUrl)); // Use native WebSocket
 
             client.onopen = () => {
@@ -132,9 +132,9 @@ const Control = () => {
     };
 
     const handleVentiladorClick = () => {
-        const ventiladorConstante = ventiladorEncendido;
-        if(ventilador===0) ventiladorConstante === (false);
-        if(ventilador===1) ventiladorConstante ===(true);
+        let ventiladorConstante = ventiladorEncendido;
+        if(ventilador===0) ventiladorConstante = (false);
+        if(ventilador===1) ventiladorConstante = (true);
         setVentiladorEncendido(ventiladorConstante);
         if (ventiladorConstante) {
             sendDataToWebSocketVenti(0);
